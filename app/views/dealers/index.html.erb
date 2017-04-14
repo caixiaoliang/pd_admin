@@ -1,0 +1,39 @@
+<div class="container-fluid">
+  <div class="row">
+    <%= render "shared/sidebar"%>
+     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+      <h2 class="sub-header">经销商管理</h2>
+      
+      <%if admin?%>
+        <%= render "shared/products_nav"%>
+      <%end%>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>名称</th>
+              <th>别名</th>
+              <th>城市</th>
+              <th>创建时间</th>
+              <th>编辑</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%@dealers.each do |dealer|%>
+              <tr>
+                <td><%= dealer.id%></td>
+                <td><%= dealer.name%></td>
+                <td><%= dealer.nick_name%></td>
+                <td><%= dealer.address_city.try(:name)%></td>
+                <td><%= dealer.created_at.localtime.strftime("%Y-%m-%d %H:%M")%></td>
+                <td><%= link_to "编辑",edit_dealer_path(dealer)%></td>
+              </tr>
+            <%end if @dealers.present?%>
+          </tbody>
+        </table>
+        <%=will_paginate @dealers%>
+      </div>
+    </div>
+  </div>  
+</div>

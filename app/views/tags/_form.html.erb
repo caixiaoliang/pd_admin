@@ -1,0 +1,12 @@
+<%= form_for @tag do |f| %>
+  <div>
+    <h4>标签名:</span>
+  </div>
+  <div>
+    <%= f.text_field :name,class: "form-control",placeholder: "请输入标签名"%><div class="error"><%=@tag.errors[:name].join(",")%></div>
+  </div>
+  <br>
+  <div>
+    <%= f.submit "提交",class: "btn btn-primary form-control"%>
+  </div>
+<%end%>

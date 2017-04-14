@@ -1,0 +1,16 @@
+<div class="upload-group">
+  <div class="upload-item">
+    <i style="vertical-align: middle;line-height: 34px;cursor:pointer;" class="fa fa-2x fa-folder-open" aria-hidden="true" onclick="product_info_file.click();"></i>
+    <span class="filename"></span>
+  </div>
+  <div class="upload-item">
+    <button class="btn btn-default product_info_submit">提交</button>
+  </div>
+  <div class="upload-item percentage hidden">
+    <i class="fa fa-refresh fa-spin fa-3x fa-fw" aria-hidden="true" style="vertical-align: middle;line-height: 34px;"></i>
+    <span id="upload-percentage"></span>
+  </div>
+  <p id="upload-errors" class="error"></p>
+  <p>文件上传(仅限CSV格式的文件)</p>
+  <input type="file" id="product_info_file" name="file[file]"  style="display:none" onchange="pretreatmentFile();">
+</div>

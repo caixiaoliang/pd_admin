@@ -1,0 +1,59 @@
+<div class="container-fluid">
+  <div class="row">
+    <%= render "shared/sidebar"%>
+    <div class="col-sm-5 col-sm-offset-3 col-md-5 col-md-offset-3 main">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">创建用户</h3>
+        </div>
+        <div class="panel-body">
+          <%= form_for @user,remote: true do |f|%>
+            <%= f.text_field :name,class: "form-control",placeholder: "输入用户名"%>
+            <div class="role_type">
+              <%=select_tag :role, options_for_select(Enums.account_type.map{|k,v| [v,k.to_s]}), prompt: '请选择帐户类型', class: 'bt-select js-album-list' %>
+            </div>
+            
+
+            <div class="error"><%=@user.errors[:name].join(",")%></div>
+          <%end%>
+        </div>
+        <div class="panel-footer">
+          <button class="btn btn-success" id="create_user">创建</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="user_info_modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div style="text-align:center">
+          <h4 class="modal-title">
+          用户信息
+          </h4>
+        </div>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default close-user-info">我已记住</button>
+      </div>
+    </div>
+  </div>  
+</div>  
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).on("click","#create_user",function(){
+    $("#new_user").submit();
+  });
+  $(document).on("click",".close-user-info",function(){
+    path = "<%=root_url%>"
+    $("#user_info_modal").modal("hide");
+    window.location.replace(path);
+  });
+ })
+</script>

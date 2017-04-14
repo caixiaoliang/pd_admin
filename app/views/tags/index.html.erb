@@ -1,0 +1,36 @@
+<div class="container-fluid">
+  <div class="row">
+    <%= render "shared/sidebar"%>
+     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+      <h2 class="sub-header">标签管理</h2>
+
+        <div>
+          <h4><%= link_to "新建标签",new_tag_path%></h4>
+        </div>
+
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>名称</th>
+              <th>创建时间</th>
+              <th>编辑</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%@tags.each do |tag|%>
+              <tr>
+                <td><%= tag.id%></td>
+                <td><%= tag.name%></td>
+                <td><%= tag.created_at.localtime.strftime("%Y-%m-%d %H:%M")%></td>
+                <td><%= link_to "编辑",edit_tag_path(tag)%></td>
+              </tr>
+            <%end if @tags.present?%>
+          </tbody>
+        </table>
+        <%=will_paginate @tags%>
+      </div>
+    </div>
+  </div>  
+</div>

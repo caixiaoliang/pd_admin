@@ -1,0 +1,81 @@
+<div class="container-fluid">
+  <div class="row">
+    <%= render "shared/sidebar"%>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-3 col-md-7 col-md-offset-2">
+          <h2 class="sub-header">产品系列名详情管理</h2>
+
+          <p>页面型号: <%=@model.name%></p>
+          <%= form_tag(serial_path(@model),method: :put,multipart: true) do%>
+            <div class="form-group">
+              <span>所属系列名</span>
+              <input type="text" name="serial_name" class="serial_suggest form-control" placeholder="输入系列名" list="serial_list" value="<%= @model.serial.try(:name)%>"/>
+              <datalist id="serial_list">
+              </datalist>
+            </div>
+            <div class="form-group">
+              <span>标签</span>
+              <%=select_tag :tag_id, options_for_select(@tags_options,@model.tag.try(:id)), prompt: '请选择标签', class: 'bt-select js-album-list' %>
+            </div>
+            <div class="form-group">
+              图片
+              <input type="file" id="serial_cover" name="file"/>
+              <%= image_tag(@model.model_cover,size: "200x200") if @model.cover %>
+            </div>
+            <button class="submit btn btn-primary">保存</button>
+          <%end%>
+        </div>
+      </div>
+
+    </div>
+  </div>  
+</div>
+
+<script type="text/javascript">
+
+$(function(){
+  var serial_list = $('#serial_list');
+  serial_list.hide();
+})
+
+  var sendKeyWord = function(event){
+  }
+  function dispalySuggestSerial(data){
+    var serial_list = $('#serial_list');    
+    serial_list.html('');
+    var option;
+    var tmpFrag = document.createDocumentFragment();
+    for(var i=0;i< data.length;i++){
+      option = document.createElement("option");
+      option.innerHTML = data[i];
+      tmpFrag.appendChild(option);
+    }
+    serial_list.append(tmpFrag);
+    serial_list.show();
+  }
+
+  $(document).on("blur",".serial_suggest",function(){
+   
+  });
+  $(document).on("focus",".serial_suggest",function(){
+    var url = "/api/v1/products_info/serials.json";
+    $.get(url,function(res){
+      dispalySuggestSerial(res.serials);
+    })
+  });
+
+</script>
+<script> 
+  window.onload = function(){ 
+    var input = document.getElementById("serial_cover"); 
+    input.addEventListener( 'change',readFile,false );}
+    function readFile(){ 
+      var file = this.files[0]; 
+      //这里我们判断下类型如果不是图片就返回 去掉就可以上传任意文件 
+      if(!/image\/\w+/.test(file.type)){ 
+        alert("请确保文件为图像类型"); 
+        return false; 
+      } 
+  }
+</script> 

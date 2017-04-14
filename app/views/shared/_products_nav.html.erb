@@ -1,0 +1,13 @@
+<div class="nav-inline">
+  <ul>
+    <li class="<%=params[:type] == "acoustics" ? "active" : ''%>">
+      <%=link_to "音响",url_for(controller: params[:controller], action: 'index',type: "acoustics")%>
+    </li>
+    <li class="<%=params[:type] == "pianos" ? "active" : ''%>">
+      <%=link_to "钢琴",url_for(controller: params[:controller], action: 'index',type: "pianos")%>
+    </li>
+    <li class="<%=params[:type] == "orchestras" ? "active" : ''%>">
+    <%=link_to "管乐",url_for(controller: params[:controller], action: 'index',type: "orchestras")%>
+    </li>
+  </ul>
+</div>

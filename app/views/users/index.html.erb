@@ -1,0 +1,63 @@
+
+<div class="container-fluid">
+  <div class="row">
+    <%= render "shared/sidebar"%>
+
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+      <h2 class="sub-header">用户 管理</h2>
+
+      <% if current_user.try(:admin?)%>
+        <h4><%= link_to "新建用户", new_user_path%></h4>
+      <%end%>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>姓名</th>
+              <th>权限</th>
+              <th>创建时间</th>
+              <th>更新时间</th>
+              <th>操作</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%@users.each do |user|%>
+              <tr>
+                <td><%= user.name%></td>
+                <td><%= user.role%></td>
+                <td><%= user.created_at.localtime.strftime("%Y-%m-%d %H:%M")%></td>
+                <td><%= user.updated_at.localtime.strftime("%Y-%m-%d %H:%M")%></td>
+                <td><%= link_to "重置密码", user_path(user),method: :put,remote: true%></td>
+                <td ><%= link_to "删除",user_path(user),data:{confirm: 'Are you sure?'},method: :delete%></td>              </tr>
+            <%end if @users.present?%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal" id="updated_user_info_modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div style="text-align:center">
+          <h4 class="modal-title">
+          用户信息
+          </h4>
+        </div>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default close-user-info" onclick='$("#updated_user_info_modal").modal("hide");'>我已记住</button>
+      </div>
+    </div>
+  </div>  
+</div>
+

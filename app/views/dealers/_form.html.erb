@@ -1,0 +1,31 @@
+<%= form_for @dealer do |f| %>
+  <div>
+    <h4>收货单位:<%= @dealer.name %></span>
+  </div>
+  <div>
+    <span>名称</span>
+    <%= f.text_field :nick_name, class: "form-control",placeholder: "请输入名称"%><div class="error"><%=@dealer.errors[:nick_name].join(",")%></div>
+      <%=f.select :address_province_id ,options_for_select(@provinces,f.object.address_province_id), prompt: '省', class: 'bt-select js-province-list' %>
+      <%=f.select :address_city_id, options_for_select(@cities,f.object.address_city_id),prompt: '市',class: 'bt-select '%>
+  </div>
+  <br>
+  <div>
+    <%= f.submit "提交",class: "btn btn-primary form-control"%>
+  </div>
+<%end%>
+<script type="text/javascript">
+  $(function(){
+
+    $(document).on("change","#dealer_address_province_id",function(){
+      var pro_code = $("#dealer_address_province_id").val();
+      var url = "<%= root_path%>api/v1/districts/cities_by_province.json?provinceCode=" + pro_code;
+      $.get(url,function(res){
+        $("#dealer_address_city_id").html('');
+        $.each(res.cities,function(i,v){
+          $("#dealer_address_city_id").append('<option value="'+v.code+'">'+v.name+'</option>');
+        });
+      })
+    })
+  })
+
+</script>

@@ -1,0 +1,38 @@
+<div class="container-fluid">
+  <div class="row">
+    <%= render "shared/sidebar"%>
+     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+      <h2 class="sub-header">产品系列名管理</h2>
+      <%if admin?%>
+        <%= render "shared/products_nav"%>
+      <%end%>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>型号id</th>
+              <th>型号</th>
+              <th>所属系列</th>
+              <th>标签</th>
+              <th>图片</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%@models.each do |model|%>
+              <tr>
+                <td><%= model.id%></td>
+                <td><%= model.name%></td>
+                <td><%= model.try(:serial).try(:name)|| "暂无"%></td>
+                <td><%= model.try(:tag).try(:name)|| "暂无"%></td>
+                <td><%= image_tag(model.model_cover,size: "50x50") if model.cover %></td>
+                <td><%= link_to "编辑",edit_serial_path(model)%></td>
+              </tr>
+            <%end if @models.present?%>
+          </tbody>
+        </table>
+        <%=will_paginate @models%>
+      </div>
+    </div>
+  </div>  
+</div>

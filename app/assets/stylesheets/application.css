@@ -1,0 +1,64 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require bootstrap.min
+*= require font-awesome
+ *= require_self
+ */
+.error{
+  color: #A94442;
+}
+
+select {
+  width: 100%;
+  /*统一边框*/
+  border: solid 1px #CCCCCC;
+  /*将默认的select选择框样式清除*/
+  appearance:none;//这个样式就是清除他的下拉按钮的默认样式
+  -moz-appearance:none;
+  -webkit-appearance:none;
+  /*替换选择框的最右侧显示小箭头图片*/
+  background: url("http://****.png") no-repeat scroll right center transparent;
+  /*为下拉小箭头留出一点位置，避免被文字覆盖*/
+  padding-right: 14px;
+  padding: 6px 12px;
+}
+/*清除ie的默认选择框样式清除，隐藏下拉箭头*/
+select::-ms-expand { display: none; }
+
+.upload-group{
+  padding: 8px 0;
+  border: 1px solid lightgray;
+  border-radius: 8px;
+}
+.upload-item{
+  display: inline-block;
+  padding: 10px 15px;
+}
+
+.nav-inline{
+  border-bottom: 1px solid lightgray;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+.nav-inline > ul li.active {
+  /*border-bottom: 4px solid #f3565d;*/
+   border-bottom: 4px solid #428BCA;
+  position: relative;
+}
+.nav-inline >ul li{
+  display: inline-block;
+  width: 10%;
+  text-align: center;
+}
+
