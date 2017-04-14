@@ -25,7 +25,8 @@ class ProductsInfoController < ApplicationController
       FileUpload::ProgressPercentage.clear_by_key(key)
       completed = true
     end
-    render json: {success: true, code: 200, count: data,completed: completed}
+    render json: { success: true, code: 200, count: data,completed: completed }
+
   end
 
 end

@@ -1,9 +1,10 @@
 class ProductImport
 
-  attr_reader :progress_percentage, :file
-  def initialize(file,progress_key=nil)
+  attr_reader :progress_percentage, :file,:role
+  def initialize(file,progress_key=nil,role)
     @progress_percentage = FileUpload::ProgressPercentage.new(key = progress_key)
     @file = file
+    @role = role
   end
 
   def work(&blcok)
@@ -16,6 +17,39 @@ class ProductImport
       puts "completed_count:#{completed_count} redis#{self.progress_percentage.progress}"
     end
     File.delete(self.file)
+  end
+
+  def after_import
+    case self.role
+    when  'pianos'
+      generate_tags("pianos")
+    end  
+  end
+
+
+  def generate_tags(product)
+    models = Model.joins(product.to_sym).uniq
+    models.each do |model|
+      begin
+        aleph = model.pianos.first.device_number[0]
+
+        case aleph
+        when "J"
+          tag = Tag.find_or_create_by!(name: "印尼产");
+        when "H"
+          tag = Tag.find_or_create_by!(name: "中国产");
+        when "CH"
+          tag = Tag.find_or_create_by!(name: "中国产");
+        else
+          if aleph =~ /^\d/
+            tag = Tag.find_or_create_by!(name: "日本产");
+          end
+        end 
+        model.update_attribute(:tag_id, tag.id) if tag
+      rescue Exception => e
+        puts e
+      end
+    end
   end
 
   def test_upload
@@ -38,27 +72,6 @@ class ProductImport
 
 
   class << self
-    Piano_Data_Parse = ->(array_of_hashes){
-      array_of_hashes.each do |hash|
-        hash.reject!{|k,v| !["out_da","dealer_name","gmc_name"].include?(k.to_s)}
-        dealer_name = hash[:dealer_name] #经销商
-        if hash[:out_da].present? && hash[:gmc_name].present?
-          device_number = Acoustic.device_number_convert(hash[:out_da])   #机号
-          gmc_name = Acoustic.gmc_name_convert(hash[:gmc_name]) #型号
-          model = Model.find_or_create_by(name: gmc_name)
-          dealer = Dealer.find_or_create_by(name: dealer_name)
-          # Acoustic.find_or_create_by(device_number: device_number,dealer: dealer_name,model_id: model.id) #faster
-          if model && dealer && device_number.present?
-            Acoustic.find_or_create_by(device_number: device_number) do |acoustic|
-              acoustic.dealer_id = dealer.id
-              acoustic.model_id = model.id
-            end
-          end
-        end
-      end
-    }
-
-
     def product_data_parse(klass_name,opt={})
       return ->(array_of_hashes){
         klass = klass_name.constantize
