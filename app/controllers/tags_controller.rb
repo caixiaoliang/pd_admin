@@ -5,7 +5,8 @@ class TagsController < ApplicationController
   end
   
   def index
-    @tags = Tag.all.paginate(page: params[:page],per_page: 20)
+    tags_id = Model.joins(:pianos).uniq.map{|m| m.tag_id}.uniq.compact
+    @tags = Tag.where(id: tags_id).paginate(page: params[:page],per_page: 20)
   end
 
   def create
