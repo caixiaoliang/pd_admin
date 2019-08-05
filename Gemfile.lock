@@ -1,5 +1,5 @@
 GEM
-  remote: https://ruby.taobao.org/
+  remote: https://gems.ruby-china.com/
   specs:
     actionmailer (4.2.8)
       actionpack (= 4.2.8)
@@ -108,7 +108,7 @@ GEM
     mini_portile2 (2.1.0)
     minitest (5.10.1)
     multi_json (1.12.1)
-    mysql2 (0.4.5)
+    mysql2 (0.4.10)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (4.1.0)
@@ -240,7 +240,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   jquery-turbolinks
-  mysql2
+  mysql2 (~> 0.4.0)
   parallel
   pry
   pry-nav
@@ -261,4 +261,4 @@ DEPENDENCIES
   web-console (~> 2.0)
 
 BUNDLED WITH
-   1.14.6
+   1.17.2

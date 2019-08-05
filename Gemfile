@@ -1,10 +1,12 @@
-source 'https://ruby.taobao.org/'
+source 'https://gems.ruby-china.com'
+
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.8'
 # Use sqlite3 as the database for Active Record
-gem 'mysql2'
+gem 'mysql2', '~> 0.4.0'
+
 
 gem 'smarter_csv'
 gem  'parallel'
