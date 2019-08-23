@@ -15,6 +15,10 @@ class ApplicationController < ActionController::Base
       redirect_to login_path  unless logged_in?
     end
 
+    def check_limit_gaccount
+      redirect_to gaccounts_path if Gaccount.all.count() > 3
+    end
+
     def admin?
       current_user.try(:admin)
     end

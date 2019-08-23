@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
   attr_accessor :account_type
   has_secure_password
 
+  has_many :gaccounts
+
   def authenticated?(token)
     digest = self.password_digest
     return false if digest.nil?

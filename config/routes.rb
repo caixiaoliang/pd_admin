@@ -7,17 +7,25 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'   
   root 'home#index'
   resources :users
+  resources :gaccounts
   resources :sessions
   resources :serial
   resources :tags
   resources :dealers
+
+
+  resources :groupon_products do
+    collection do
+      post 'upload'
+    end
+  end
+
 
   resources :products_info do
     collection do
       post 'upload'
       get 'upload_progress'
     end
-
   end
 
 

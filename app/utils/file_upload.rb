@@ -10,7 +10,7 @@ module FileUpload
     end
 
     def redis_hash
-      @redis_hash ||= Redis::HashKey.new("pd_admin", :marshal => true)
+      # @redis_hash ||= Redis::HashKey.new("pd_admin", :marshal => true)
     end
   end
 
@@ -19,33 +19,30 @@ module FileUpload
     # 进度信息默认存在redis中
     def initialize(key=nil)
       @key = key
-      @redis_hash = FileUpload.redis_hash
+      # @redis_hash = FileUpload.redis_hash
     end
 
     def progress
-
-      @redis_hash[@key]
+      # @redis_hash[@key]
     end
 
     def progress=(hash)
-      tmp = progress || {}
-      # puts "tmp #{tmp}"
-      tmp.merge!(hash)
-      # puts "tmpafter #{tmp}"
-      @redis_hash[@key] = tmp
+      # tmp = progress || {}
+      # tmp.merge!(hash)
+      # @redis_hash[@key] = tmp
     end
 
     def clear
-      FileUpload.redis_hash.delete(@key)
+      # FileUpload.redis_hash.delete(@key)
     end
 
     class << self
       def get_progress_by_key(key)
-        FileUpload.redis_hash[key]
+        # FileUpload.redis_hash[key]
       end
 
       def clear_by_key(key)
-        FileUpload.redis_hash.delete(key)
+        # FileUpload.redis_hash.delete(key)
       end
     end
   end
@@ -73,6 +70,7 @@ module FileUpload
     end
 
     def store_in_local
+      FileUtils.mkdir_p(path) unless File.exists?(path)
       File.open(loacl_url, "wb+") do |f|
         f.write(tmp_file.read)
       end

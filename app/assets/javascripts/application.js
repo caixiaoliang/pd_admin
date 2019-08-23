@@ -53,10 +53,14 @@ function truncate(str,lengthLimit){
   return str.length < lengthLimit ? str : str.slice(0,lengthLimit) + "...";
 }
 
+
 function formatValidate(){
   errorMessage=[];
   var filename = fileName("#product_info_file")
   suffix = filename.split(".").pop();
+
+  gaccount = $('select[name="gaccount_id"]').val()
+
   if(suffix == "")
   {
     errorMessage.push("不能为空");
@@ -64,6 +68,9 @@ function formatValidate(){
   else if(suffix != "csv")
   {
     errorMessage.push("文件格式错误,只允许csv");
+  }
+  else if(gaccount == ""){
+    errorMessage.push("请选择商品上传到的商户");
   }
   return errorMessage.length==0
 }
@@ -90,10 +97,12 @@ $(function(){
   var displayUploadProgress = function(){
     if(oReq.readyState == 4){
       if (oReq.status == 200) {
-        var data = JSON.parse(oReq.responseText);
-        key = data.key
-        askProgress();
-        itv = setInterval(askProgress,1000*3);
+        console.log("success")
+        alert("上传完成");
+        // var data = JSON.parse(oReq.responseText);
+        // key = data.key
+        // askProgress();
+        // itv = setInterval(askProgress,1000*3);
       }
       else {
         console.log("error");
@@ -131,6 +140,15 @@ $(function(){
     },"json");
   }
 
+  $('#gaccount_id').change(() => {
+    console.log($('#gaccount_id').val());
+      if(formatValidate()){
+        clearError();
+        $(".product_info_submit")[0].disabled=false;
+      }
+    }
+  )
+
   $(document).on("submit","#product_info_upload",function(event){
     event.preventDefault();
  
@@ -149,8 +167,10 @@ $(function(){
     oReq = new XMLHttpRequest();
     fd.append('file',$('#product_info_file')[0].files[0]);
     fd.append('authenticity_token',$('input[name="authenticity_token"]').val());
+    fd.append('gaccount_id',$('select[name="gaccount_id"]').val());
     oReq.onreadystatechange = displayUploadProgress;
-    oReq.open("POST", "/products_info/upload",true);
+    // oReq.open("POST", "/products_info/upload",true);
+    oReq.open("POST", "/groupon_products/upload",true);
     oReq.send(fd);
   }
 

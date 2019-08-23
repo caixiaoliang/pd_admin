@@ -5,19 +5,13 @@
       <%= link_to "用户管理",users_path%>
     </li>
     <%end%>
-    <li class="<%=active_class("products_info")%>">
-      <%= link_to "产品信息管理",products_info_index_path%>
-    </li>
   </ul>
   <ul class="nav nav-sidebar">
-    <li class="<%=active_class("serial")%>">
-      <%= link_to "产品系列名管理",serial_index_path%>
+    <li class="<%=active_class("groupon_products")%>">
+      <%= link_to "商户商品管理",groupon_products_path%>
     </li>
-    <li class="<%=active_class("dealers")%>"><%= link_to "经销商管理",dealers_path%></li>
-  </ul>
-  <ul class="nav nav-sidebar">
-    <li class="<%=active_class("tags")%>">
-      <%= link_to "标签管理",tags_path%>
+    <li class="<%=active_class("gaccounts")%>">
+      <%= link_to "Groupon 商户管理",gaccounts_path%>
     </li>
   </ul>
 </div>

@@ -1,0 +1,11 @@
+<div class="nav-inline">
+  <ul>
+    <%@gaccounts.each do |gaccount|%>
+      <li class="<%=params[:gid] == gaccount.id.to_s ? "active" : '' %>">
+        <%=link_to gaccount.name,groupon_products_path(gid: gaccount.id)%>
+      </li>
+    <%end if @gaccounts.present?%>
+
+
+  </ul>
+</div>

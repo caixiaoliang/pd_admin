@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170414021845) do
+ActiveRecord::Schema.define(version: 20190821122910) do
 
   create_table "acoustics", force: :cascade do |t|
     t.string   "device_number", limit: 255, null: false
@@ -50,6 +50,14 @@ ActiveRecord::Schema.define(version: 20170414021845) do
 
   add_index "dealers", ["name"], name: "index_dealers_on_name", unique: true, using: :btree
 
+  create_table "gaccounts", force: :cascade do |t|
+    t.string   "name",       limit: 255, null: false
+    t.string   "pwd",        limit: 255, null: false
+    t.integer  "user_id",    limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "models", force: :cascade do |t|
     t.string   "name",       limit: 255,   null: false
     t.text     "cover",      limit: 65535
@@ -71,6 +79,17 @@ ActiveRecord::Schema.define(version: 20170414021845) do
 
   add_index "orchestras", ["device_number"], name: "index_models_on_device_number", unique: true, using: :btree
 
+  create_table "pgroup", force: :cascade do |t|
+    t.string   "vendorId",    limit: 255
+    t.string   "productUID",  limit: 255
+    t.string   "product_sku", limit: 255
+    t.integer  "status",      limit: 8,   default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "pgroup", ["productUID"], name: "puid", unique: true, using: :btree
+
   create_table "pianos", force: :cascade do |t|
     t.string   "device_number", limit: 255, null: false
     t.integer  "dealer_id",     limit: 4
@@ -80,6 +99,17 @@ ActiveRecord::Schema.define(version: 20170414021845) do
   end
 
   add_index "pianos", ["device_number"], name: "index_models_on_device_number", unique: true, using: :btree
+
+  create_table "products", force: :cascade do |t|
+    t.string   "vendorId",    limit: 255,             null: false
+    t.string   "productUID",  limit: 255,             null: false
+    t.string   "product_sku", limit: 255,             null: false
+    t.integer  "status",      limit: 4,   default: 0
+    t.integer  "img_count",   limit: 4,   default: 0
+    t.integer  "gaccount_id", limit: 4
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
 
   create_table "serials", force: :cascade do |t|
     t.string   "name",       limit: 255, null: false

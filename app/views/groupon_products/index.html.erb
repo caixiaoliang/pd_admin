@@ -1,0 +1,54 @@
+<div class="container-fluid">
+  <div class="row">
+    <%= render "shared/sidebar"%>
+     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+      <h2 class="sub-header">产品信息管理</h2>
+
+      <div class="row placeholders">
+        <div class="col-xs-6 col-sm-6 placeholder">
+          <% if current_user%>
+            <%=form_tag(upload_products_info_index_path,multipart: true,id: "product_info_upload") do%>
+            
+            <div class="form-group">
+              <%=select_tag :gaccount_id, options_for_select(@tags_options), prompt: '请选择上传商品的商户', class: 'bt-select' %>
+            </div>
+
+              <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+              <%= render "shared/upload_file"%>
+            <%end%>
+          <%end%>
+        </div>
+        <div class="col-xs-6 col-sm-3 placeholder">
+
+        </div>
+      </div>
+        
+      <%= render "shared/gaccounts_nav"%>
+
+      <div class="">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>sku</th>
+              <th>图片数</th>
+              <th>创建时间</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%@products.each do |product|%>
+              <tr>
+                <td><%= product.id %></td>
+                <td><%= product.product_sku%></td>
+                <td><%= product.img_count %></td>
+                <td><%= product.created_at.localtime.strftime("%Y-%m-%d %H:%M")%></td>
+              </tr>
+            <%end if @products.present?%>
+          </tbody>
+        </table>
+        <%=will_paginate @products%>
+      </div>
+    </div>
+  </div>  
+</div>

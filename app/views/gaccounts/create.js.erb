@@ -1,0 +1,4 @@
+var content="<h3>用户名:<%= @user.name%></h3><h3>用户密码:<%= @password%></h3>(请妥善保存密码，之后将不再显示)"
+console.log(content);
+$("#user_info_modal .modal-body").html(content);
+$("#user_info_modal").modal();
