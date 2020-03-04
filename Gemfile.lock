@@ -122,7 +122,7 @@ GEM
       slop (~> 3.4)
     pry-nav (0.2.4)
       pry (>= 0.9.10, < 0.11.0)
-    puma (3.8.2)
+    puma (3.12.4)
     rack (1.6.5)
     rack-protection (1.5.3)
       rack
